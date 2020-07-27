@@ -27,11 +27,6 @@ type Pointlog struct {
 	Created_at   string    `json:"created_at"`
 }
 
-type Totalpoint struct {
-	Member_id   int `json:"member_id"`
-	Total_point int `json:"total_point"`
-}
-
 var err error
 var res Response
 var ctx context.Context
@@ -58,6 +53,8 @@ func GetPoint(member_id int) (Response, error) {
 	sqlselect := "SELECT total_point from tb_member where member_id=?"
 
 	row := con.QueryRow(sqlselect, member_id)
+
+	defer con.Close()
 
 	switch err := row.Scan(&total_point); err {
 	case sql.ErrNoRows:
