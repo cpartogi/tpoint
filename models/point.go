@@ -157,8 +157,6 @@ func UpdatePoint(insert_id uuid.UUID, member_id int, point_type int, point_desc 
 
 	row := con.QueryRow(sqlselect, member_id)
 
-	defer con.Close()
-
 	switch err := row.Scan(&point_before); err {
 	case sql.ErrNoRows:
 		fmt.Println("No rows were returned!")
